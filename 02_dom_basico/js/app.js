@@ -28,7 +28,6 @@ function renderizarLista(datos) {
   contenedor.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-
   datos.forEach(el => {
     const card = document.createElement('div');
     card.classList.add('card');
