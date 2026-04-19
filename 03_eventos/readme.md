@@ -22,15 +22,30 @@ Se implementaron técnicas esenciales para el desarrollo profesional como la pre
 
 ## 🧑‍💻 Capturas de Pantalla
 
-### Vista General (Sin Filtros)
-Muestra la aplicación con la carga inicial de todos los datos y la estructura base.
+### 1. Validación en acción
+Muestra los mensajes de error dinámicos que aparecen cuando los campos del formulario no cumplen con los requisitos mínimos de validación.
 
-![Vista General](./assets/01-vista-general.png)
+![Vista Accion](./assets/01-validacion.png)
 
-### Vista con Filtrado Aplicado
-Muestra la interfaz tras interactuar con los botones de categoría, reflejando el cambio de estilos y la reducción de elementos en el contenedor.
+### 2. Formulario procesado
+Muestra la interfaz tras un envío exitoso mediante el atajo de teclado, visualizando el resumen de los datos recibidos y el reseteo automático de los campos.
 
-![Vista Filtrado](./assets/02-filtrado.png)
+![Vista Formulario](./assets/02-formulario-enviado.png)
+
+### 3. Event delegation funcionando
+Muestra el sistema de tareas dinámico en funcionamiento, permitiendo la gestión de múltiples elementos mediante un único escuchador de eventos en el contenedor padre.
+
+![Vista Event](./assets/03-delegacion.png)
+
+### 4. Contador de tareas actualizado
+Demuestra la actualización automática en tiempo real del contador de tareas pendientes conforme se agregan o eliminan elementos de la lista.
+
+![Vista Contador](./assets/04-contador-tareas-actualizado.png)
+
+### 5. Tareas completadas
+Refleja el cambio de estado visual (texto tachado y estilo grisáceo) al interactuar con el DOM para marcar una tarea como finalizada.
+
+![Vista Completadas](./assets/05-tareas-completadas.png)
 
 ---
 
@@ -55,16 +70,7 @@ formulario.addEventListener('submit', (e) => {
   // Foco automático en el primer error encontrado
   if (!nombreValido) inputNombre.focus();
 });
-
-
-
-### 1. Validación de formulario con `preventDefault()`
-Se intercepta el evento de envío para validar todos los campos antes de permitir el procesamiento de los datos.
-
-```javascript
-formulario
 ```
-
 
 ### 2. Atajo de teclado (Ctrl + Enter)
 Implementación de un atajo de productividad que permite enviar el formulario utilizando combinaciones de teclas globales.
