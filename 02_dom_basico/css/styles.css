@@ -1,0 +1,119 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+}
+
+h2 {
+    color: #02295f;
+    margin-bottom: 15px;
+}
+
+.info-estudiante, .estadisticas {
+    margin-bottom: 20px;
+}
+
+.info-estudiante p, .estadisticas p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-filtro {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4a5568;
+    transition: all 0.2s ease;
+}
+
+.btn-filtro:hover {
+    background-color: #f1f5f9;
+}
+
+.btn-filtro-activo {
+    background-color: #04439b;
+    color: white;
+    border-color: #1a365d;
+}
+
+.btn-filtro-activo:hover {
+    background-color: #2a4365;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.card h3 {
+    color: #1a365d;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.card p {
+    color: #4a5568;
+    margin: 0 0 15px 0;
+}
+
+.badges {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-categoria { background-color: #e2e8f0; color: #1a365d; }
+.prioridad-alta { background-color: #fee2e2; color: #dc2626; }
+.prioridad-media { background-color: #fef3c7; color: #d97706; }
+.prioridad-baja { background-color: #dcfce7; color: #016024; }
+.estado-activo { background-color: #dcfce7; color: #05a741; }
+.estado-inactivo { background-color: #f3f4f6; color: #6b7280; }
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-eliminar {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-eliminar:hover {
+    background-color: #dc2626;
+}
