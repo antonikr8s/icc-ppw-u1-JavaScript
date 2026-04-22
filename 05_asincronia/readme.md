@@ -1,8 +1,8 @@
-# Práctica 03: Eventos en JavaScript
+# Práctica 05: Programación Asíncrona
 
 ## 📌 Información General
 
-- **Título:** Práctica 03: Eventos en JavaScript
+- **Título:** Práctica 05: Programación Asíncrona
 - **Asignatura:** Programación y Plataformas Web
 - **Carrera:** Ingeniería en Computación
 - **Estudiante:** Carlos Antonio Gordillo Tenemaza
@@ -12,96 +12,112 @@
 
 ## 🛠️ Descripción
 
-Este proyecto profundiza en la interactividad web mediante el manejo avanzado de **eventos** en JavaScript. La aplicación consta de dos módulos principales: un sistema de validación de formularios robusto y una lista de tareas dinámica. 
+Este proyecto es un simulador interactivo diseñado para demostrar y comparar los diferentes enfoques de la **programación asíncrona** en JavaScript. La aplicación permite visualizar en tiempo real cómo el Event Loop gestiona tareas que consumen tiempo, evitando que la interfaz de usuario se congele.
 
-Se implementaron técnicas esenciales para el desarrollo profesional como la prevención de comportamientos por defecto (`preventDefault`), la validación de datos en tiempo real (eventos `blur` e `input`), y la optimización de recursos mediante la **Delegación de Eventos** (Event Delegation), permitiendo gestionar múltiples elementos interactivos con un solo escuchador en el nodo padre.
-
-**Nota sobre la implementación y diseño:** Al igual que en la práctica anterior, el material base carecía de estilos y vinculación. Se integró manualmente la etiqueta `<link rel="stylesheet" href="css/styles.css">` en el `index.html` y se desarrolló íntegramente el archivo `styles.css` para proporcionar una interfaz moderna, con estados visuales claros para errores, botones activos y tareas completadas.
+El proyecto está dividido en tres módulos funcionales:
+1. **Simulador de Peticiones:** Compara el rendimiento entre la ejecución secuencial (`await` consecutivos) y la ejecución paralela (`Promise.all()`).
+2. **Temporizador Regresivo:** Implementa `setInterval` y manipulación del DOM para crear una cuenta regresiva con barra de progreso y alertas visuales.
+3. **Manejo de Errores:** Demuestra la captura segura de excepciones mediante bloques `try/catch` y un sistema de reintentos automáticos con backoff exponencial.
 
 ---
 
 ## 🧑‍💻 Capturas de Pantalla
 
-### 1. Validación en acción
-Muestra los mensajes de error dinámicos que aparecen cuando los campos del formulario no cumplen con los requisitos mínimos de validación.
+### 1. Estructura del proyecto
+**Descripción:** Explorador de archivos de Visual Studio Code mostrando la correcta organización del proyecto con sus directorios css, js, assets y el archivo principal index.html.
 
-![Vista Accion](./assets/01-validacion.png)
+![Vista Accion](./assets/01-estructura.png)
 
-### 2. Formulario procesado
-Muestra la interfaz tras un envío exitoso mediante el atajo de teclado, visualizando el resumen de los datos recibidos y el reseteo automático de los campos.
 
-![Vista Formulario](./assets/02-formulario-enviado.png)
+### 2. Carga secuencial
+**Descripción:** Log mostrando las 3 peticiones ejecutándose una tras otra. El tiempo total es equivalente a la suma de los tiempos de espera individuales de cada promesa.
 
-### 3. Event delegation funcionando
-Muestra el sistema de tareas dinámico en funcionamiento, permitiendo la gestión de múltiples elementos mediante un único escuchador de eventos en el contenedor padre.
+![Vista Accion](./assets/02-carga-secuencia.png)
 
-![Vista Event](./assets/03-delegacion.png)
 
-### 4. Contador de tareas actualizado
-Demuestra la actualización automática en tiempo real del contador de tareas pendientes conforme se agregan o eliminan elementos de la lista.
+### 3. Carga paralela
+**Descripción:** Log mostrando el uso de Promise.all para ejecutar las peticiones simultáneamente. Todas inician al mismo tiempo y terminan de forma mucho más eficiente.
 
-![Vista Contador](./assets/04-contador-tareas-actualizado.png)
+![Vista Accion](./assets/03-carga-paralela.png)
 
-### 5. Tareas completadas
-Refleja el cambio de estado visual (texto tachado y estilo grisáceo) al interactuar con el DOM para marcar una tarea como finalizada.
 
-![Vista Completadas](./assets/05-tareas-completadas.png)
+### 4. Comparativa de tiempos
+**Descripción:** Análisis de rendimiento que demuestra visualmente cómo la carga paralela resulta significativamente más rápida (generalmente más de un 50% de mejora) al tomar solo el tiempo del delay más largo, en contraste con la carga secuencial.
 
+![Vista Accion](./assets/04-comparativa.png)
+
+### 5. Temporizador en acción
+**Descripción:** Temporizador regresivo en funcionamiento. Se observa la actualización del display en formato MM:SS y el cálculo matemático dinámico que reduce la barra de progreso cada segundo.
+
+![Vista Accion](./assets/05-temporizador.png)
+
+
+### 6. Manejo de errores
+**Descripción:** Error capturado de forma controlada con un bloque try/catch y mostrado en la interfaz de usuario sin romper el flujo de la aplicación.
+
+![Vista Accion](./assets/06-manejo-errores.png)
+
+### 7. Consola limpia
+**Descripción:** Herramientas de desarrollador (DevTools) comprobando que, gracias al correcto manejo de excepciones asíncronas, no se generan errores en color rojo en la consola del navegador.
+
+![Vista Accion](./assets/07-consola-limpia.png)
+
+### 8. Código fuente
+**Descripción:** Evidencia del uso de buenas prácticas implementando la sintaxis moderna async/await y `Promise.all` en lugar del anidamiento tradicional con .`then()`.
+
+![Vista Accion](./assets/08-codigo-fuente.png)
 ---
 
-## 💻 Fragmentos de Código Relevantes
+## 💻 Fragmentos de Código Destacado
 
-### 1. Validación de formulario con `preventDefault()`
-Se intercepta el evento de envío para validar todos los campos antes de permitir el procesamiento de los datos.
-
+### 1. Función que retorna promesa con `setTimeout`
 ```javascript
-formulario.addEventListener('submit', (e) => {
-  e.preventDefault(); // Evita la recarga de la página
-
-  const nombreValido = validarNombre();
-  const emailValido = validarEmail();
-  // ... validación del resto de campos
-
-  if (nombreValido && emailValido && asuntoValido && mensajeValido) {
-    mostrarResultado();
-    resetearFormulario();
-    return;
-  }
-  // Foco automático en el primer error encontrado
-  if (!nombreValido) inputNombre.focus();
-});
+function simularPeticion(nombre, tiempoMin = 500, tiempoMax = 2000, fallar = false) {
+  return new Promise((resolve, reject) => {
+    const tiempoDelay = Math.floor(Math.random() * (tiempoMax - tiempoMin + 1)) + tiempoMin;
+    setTimeout(() => {
+      if (fallar) reject(new Error(`Error al cargar ${nombre}`));
+      else resolve({ nombre, tiempo: tiempoDelay, timestamp: new Date().toLocaleTimeString() });
+    }, tiempoDelay);
+  });
+}
 ```
 
-### 2. Atajo de teclado (Ctrl + Enter)
-Implementación de un atajo de productividad que permite enviar el formulario utilizando combinaciones de teclas globales.
-
+### 2. Carga Secuencial vs. Carga Paralela `(Promise.all)`
 ```javascript
-document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.key === 'Enter') {
-    e.preventDefault();
-    formulario.requestSubmit(); // Dispara el evento submit con sus validaciones
-  }
-});
+// Secuencial: Espera a que termine una para iniciar la siguiente
+const usuario = await simularPeticion('Usuario', 500, 1000);
+const posts = await simularPeticion('Posts', 700, 1500);
+
+// Paralela: Ejecuta todas simultáneamente
+const promesas = [
+  simularPeticion('Usuario', 500, 1000),
+  simularPeticion('Posts', 700, 1500)
+];
+const resultadosPromesas = await Promise.all(promesas);
 ```
 
-### 3. Event Delegation en la lista de tareas
-Uso de un único listener en el contenedor padre para gestionar acciones de "eliminar" y "completar" en elementos creados dinámicamente.
-
+### 3. Temporizador con `setInterval`
 ```javascript
-listaTareas.addEventListener('click', (e) => {
-  const action = e.target.dataset.action;
-  const item = e.target.closest('li');
-  const id = Number(item.dataset.id);
+intervaloId = setInterval(() => {
+  tiempoRestante--;
+  actualizarDisplay();
 
-  if (action === 'eliminar') {
-    tareas = tareas.filter((tarea) => tarea.id !== id);
-    renderizarTareas();
+  if (tiempoRestante <= 0) {
+    detener();
+    display.classList.add('alerta');
+    alert('⏰ ¡Tiempo terminado!');
   }
-
-  if (action === 'toggle') {
-    const tarea = tareas.find((t) => t.id === id);
-    if (tarea) tarea.completada = !tarea.completada;
-    renderizarTareas();
-  }
-});
+}, 1000);
 ```
+
+### 4. Manejo de errores con `try/catch`
+```javascript
+try {
+  await simularPeticion('API', 500, 1000, true);
+} catch (error) {
+  mostrarLogError(`❌ Error capturado: ${error.message}`, 'error');
+}
+```
+
+
