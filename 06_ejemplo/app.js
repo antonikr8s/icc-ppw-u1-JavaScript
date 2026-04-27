@@ -1,7 +1,7 @@
 'use strict';
 
 /* =========================
-   1. SELECTORES DEL DOM
+    1. SELECTORES DEL DOM
 ========================= */
 
 // Botón que dispara la petición
@@ -19,7 +19,7 @@ const URL = 'https://thesimpsonsapi.com/api/characters';
 
 
 /* =========================
-   2. EVENTO
+    2. EVENTO
 ========================= */
 
 // Escuchamos el evento "click" del botón
@@ -28,13 +28,13 @@ btn.addEventListener('click', cargarDatos);
 
 
 /* =========================
-   3. FETCH (GET)
+    3. FETCH (GET)
 ========================= */
 
 // Se declara como async porque vamos a usar await dentro
 // async permite trabajar con promesas de forma secuencial
 async function cargarDatos() {
-  try {
+    try {
     // Mostrar el loading (quitamos la clase que lo oculta)
     // classList.remove elimina la clase CSS "oculto"
     loading.classList.remove('oculto');
@@ -49,7 +49,7 @@ async function cargarDatos() {
     // fetch NO lanza error en 404 o 500
     // por eso se valida manualmente con response.ok
     if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`);
+        throw new Error(`HTTP Error: ${response.status}`);
     }
 
     // Convertir la respuesta a JSON
@@ -60,23 +60,23 @@ async function cargarDatos() {
     renderizar(data.results);
 
 
-  } catch (error) {
+    } catch (error) {
     // Captura errores:
     // - errores de red
     // - errores manuales (throw)
     mostrarError(error.message);
 
-  } finally {
+    } finally {
     // Este bloque SIEMPRE se ejecuta
     // haya error o no
     // Se usa para limpiar estado (ocultar loading)
     loading.classList.add('oculto');
-  }
+    }
 }
 
 
 /* =========================
-   4. RENDERIZADO
+    4. RENDERIZADO
 ========================= */
 
 // Construye dinámicamente el HTML con createElement
@@ -84,7 +84,7 @@ async function cargarDatos() {
 function renderizar(lista) {
 
   // Recorremos cada elemento de la API
-  lista.forEach(item => {
+    lista.forEach(item => {
 
     // Crear contenedor de card
     const card = document.createElement('div');
@@ -108,8 +108,14 @@ function renderizar(lista) {
     nombre.textContent = item.name;
 
     const ocupacion = document.createElement('p');
-    ocupacion.textContent = item.occupation || 'Sin ocupación';
+    ocupacion.textContent = item.phrases || 'Sin ocupación';
 
+    if (item.phrases && item.phrases.length > 0) { 
+        ocupacion.textContent = item.phrases.slice(0, 3).join('\n');
+        ocupacion.style.whiteSpace = 'pre-line'; 
+    } else {
+        ocupacion.textContent = 'Sin Frases';
+    }
     bloqueTexto.appendChild(nombre);
     bloqueTexto.appendChild(ocupacion);
 
@@ -119,19 +125,20 @@ function renderizar(lista) {
 
     // Insertar en el DOM
     contenedor.appendChild(card);
-  });
+    });
 }
 
 
 /* =========================
-   5. MANEJO DE ERRORES
+    5. MANEJO DE ERRORES
 ========================= */
 
 // Muestra un mensaje en pantalla si algo falla
 function mostrarError(mensaje) {
-  const p = document.createElement('p');
-  p.textContent = mensaje;
-  p.style.color = 'red';
+    const p = document.createElement('p');
+    p.textContent = mensaje;
+    p.style.color = 'red';
 
-  contenedor.appendChild(p);
+    contenedor.appendChild(p);
 }
+
