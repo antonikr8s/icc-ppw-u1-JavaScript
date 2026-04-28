@@ -93,21 +93,23 @@ function aplicarTema(nombreTema) {
 ### 1. Lista con datos
 **Descripción:** Interfaz principal mostrando los ítems (tareas) creados por el usuario, visibles y renderizados correctamente en el DOM de forma dinámica.
 
-![Vista Lista](./assets/01-)
+![Vista Lista](./assets/01-lista.png)
 
 
 ### 2. Persistencia
 **Descripción:** Comprobación de persistencia. Tras recargar la pestaña del navegador (F5), la lista de tareas y sus estados se mantienen intactos, demostrando la correcta lectura desde el localStorage en la inicialización.
-![Vista Persistencia](./assets/02-)
+![Vista Persistencia](./assets/02-persistencia.png)
 
 ### 3. Tema oscuro
 **Descripción:** Aplicación con el cambio de tema oscuro aplicado mediante la modificación de las variables CSS root, estado que también persiste en el Web Storage.
-![Vista Tema](./assets/03-)
+![Vista Tema](./assets/03-tema.png)
 
 ### 4. DevTools Application
 **Descripción:** Pestaña 'Application' de las herramientas de desarrollador (DevTools) del navegador. Se evidencia la sección 'Local Storage' mostrando las claves tareas_lista (con el array en formato JSON stringificado) y tema_app.
-![Vista DevTools](./assets/04-)
+![Vista DevTools](./assets/04-devTools.png)
 
 ### 5. Lista con datos
 **Descripción:** Capturas de los archivos principales storage.js y app.js, demostrando la organización en patrón de servicio, el CRUD funcional y el uso correcto de las APIs del navegador.
-![Vista ListaDatos](./assets/05-)
+![Vista Storage](./assets/05-codigo.png)
+
+![Vista App](./assets/05-codigo.png)
